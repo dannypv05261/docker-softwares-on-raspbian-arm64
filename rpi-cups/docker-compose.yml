@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  cups:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: repo:16999/repository/self/rpi-cups:2.3.3-self
+    container_name: cups
+    environment:
+      - CUPS_USER_ADMIN={YOUR_LOGIN}
+      - CUPS_USER_PASSWORD={YOUR_PASSWORD}
+    ports:
+     - "631:631"
+    restart: unless-stopped
+    # to find usb printer
+    privileged: true
+    volumes:
+     - /var/run/dbus:/var/run/dbus
+     - /dev/bus/usb:/dev/bus/usb
+     - /dev/usb:/dev/usb
+     - ./etc-cups:/etc/cups     
+     - ./log:/var/log/cups
+    cap_add:
+     - NET_ADMIN
