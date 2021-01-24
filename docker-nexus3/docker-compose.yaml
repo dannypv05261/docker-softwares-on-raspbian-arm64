@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  nexus:
+    build:
+      context: nexus3-docker
+      dockerfile: Dockerfile
+    container_name: nexus3
+    image: repo:16999/repository/self/klo2k/nexus3:3.29.0-02-self
+    user: 1000:1000
+    volumes:
+      - "./nexus-data:/nexus-data"
+    ports:
+      - "16888:8081"
+      - "16999-17010:8999-9010"
+    restart: unless-stopped 
+volumes:
+  nexus-data: {}
